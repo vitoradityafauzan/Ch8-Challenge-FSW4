@@ -1,0 +1,6 @@
+.env
+node_modules
+coverage
+junit.xml
+cara-memakai-eslint.txt
+yarn.lock
