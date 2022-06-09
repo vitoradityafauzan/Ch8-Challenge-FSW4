@@ -1,15 +1,14 @@
 /* eslint-disable no-undef */
+// const { INTEGER } = require("sequelize/types");
 const request = require("supertest");
 const app = require("../../../../../app");
 const { Car } = require("../../../../../app/models");
 
-describe("DELETE /v1/cars/:id", () => {
-  let car;
+describe("PUT /v1/cars/:id", () => {
+    let car;
 
   beforeEach(async () => {
-    //jest.setTimeout(10000);
-
-    const id = 2000;
+    const id = 200;
     const name = "Mobile Command Center";
     const price = 5000000;
     const size = "LARGE";
@@ -33,37 +32,47 @@ describe("DELETE /v1/cars/:id", () => {
   afterEach(() => car.destroy());
 
   it("should response with 200 as status code", async () => {
+    const name = "Kotsaka";
+    const price = 15000000;
+    const size = "LARGE";
+    const image = "https://source.unsplash.com/519x519";
+
     const accessToken = await request(app).post("/v1/auth/login").send({
       email: "soulcairn@gmail.com",
       password: "test",
     });
 
     return request(app)
-      .delete("/v1/cars/" + car.id)
+      .put("/v1/cars/" + car.id)
       .set("Authorization", `${accessToken.body.accessToken}`)
+      .set("Content-Type", "application/json")
+      .send({ name, price, size, image })
       .then((res) => {
-        expect(res.statusCode).toBe(204);
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            message: expect.any(String),
+          })
+        );
       });
   });
 
   it("should response with 422 as status code", async () => {
-      const accessToken = await request(app).post("/v1/auth/login").send({
-        email: "soulcairn@gmail.com",
-      password: "test",
-      });
+    const name = {};
+    const price = {};
+    const size = {};
+    const image = {};
 
-      const carError = {
-        id: {},
-        name: {},
-        price: {},
-        size: {},
-        image: {},
-        isCurrentlyRented: {},
-      };
+    const accessToken = await request(app).post("/v1/auth/login").send({
+      email: "soulcairn@gmail.com",
+      password: "test",
+    });
 
     return request(app)
-      .delete("/v1/cars/" + carError.id)
+      .put("/v1/cars/" + car.id)
       .set("Authorization", `${accessToken.body.accessToken}`)
+      .set("Content-Type", "application/json")
+      .send({ name, price, size, image })
       .then((res) => {
         expect(res.statusCode).toBe(422);
         expect(res.body).toEqual(

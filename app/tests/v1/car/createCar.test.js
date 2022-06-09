@@ -23,7 +23,7 @@ describe("POST /v1/cars", () => {
     const size = "MEDIUM";
 
     const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "keyblade@gmail.com",
+      email: "soulcairn@gmail.com",
       password: "test",
     });
 
@@ -55,7 +55,7 @@ describe("POST /v1/cars", () => {
     const size = {};
 
     const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "keyblade@gmail.com",
+      email: "soulcairn@gmail.com",
       password: "test",
     });
 
