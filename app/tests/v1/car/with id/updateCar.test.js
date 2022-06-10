@@ -5,7 +5,7 @@ const app = require("../../../../../app");
 const { Car } = require("../../../../../app/models");
 
 describe("PUT /v1/cars/:id", () => {
-    let car;
+    let car, accessToken;
 
   beforeEach(async () => {
     const id = 200;
@@ -25,7 +25,12 @@ describe("PUT /v1/cars/:id", () => {
       isCurrentlyRented,
     });
 
-    return car;
+    accessToken = await request(app).post("/v1/auth/login").send({
+      email: "soulcairn@gmail.com",
+      password: "test",
+    });
+
+    return car, accessToken;
   });
 
   // Delete dummy data after every 'it' method
@@ -36,11 +41,6 @@ describe("PUT /v1/cars/:id", () => {
     const price = 15000000;
     const size = "LARGE";
     const image = "https://source.unsplash.com/519x519";
-
-    const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "soulcairn@gmail.com",
-      password: "test",
-    });
 
     return request(app)
       .put("/v1/cars/" + car.id)
@@ -62,11 +62,6 @@ describe("PUT /v1/cars/:id", () => {
     const price = {};
     const size = {};
     const image = {};
-
-    const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "soulcairn@gmail.com",
-      password: "test",
-    });
 
     return request(app)
       .put("/v1/cars/" + car.id)

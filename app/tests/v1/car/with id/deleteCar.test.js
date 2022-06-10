@@ -4,11 +4,10 @@ const app = require("../../../../../app");
 const { Car } = require("../../../../../app/models");
 
 describe("DELETE /v1/cars/:id", () => {
-  let car;
+  let car, accessToken;
 
   beforeEach(async () => {
     //jest.setTimeout(10000);
-
     const id = 2000;
     const name = "Mobile Command Center";
     const price = 5000000;
@@ -26,18 +25,18 @@ describe("DELETE /v1/cars/:id", () => {
       isCurrentlyRented,
     });
 
-    return car;
+    accessToken = await request(app).post("/v1/auth/login").send({
+      email: "soulcairn@gmail.com",
+      password: "test",
+    });
+
+    return car, accessToken;
   });
 
   // Delete dummy data after every 'it' method
   afterEach(() => car.destroy());
 
   it("should response with 200 as status code", async () => {
-    const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "soulcairn@gmail.com",
-      password: "test",
-    });
-
     return request(app)
       .delete("/v1/cars/" + car.id)
       .set("Authorization", `${accessToken.body.accessToken}`)
@@ -47,11 +46,6 @@ describe("DELETE /v1/cars/:id", () => {
   });
 
   it("should response with 422 as status code", async () => {
-      const accessToken = await request(app).post("/v1/auth/login").send({
-        email: "soulcairn@gmail.com",
-      password: "test",
-      });
-
       const carError = {
         id: {},
         name: {},

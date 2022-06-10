@@ -16,16 +16,22 @@ describe("POST /v1/cars", () => {
 
 //   console.log("TESTING - ISI accessToken: " + accessToken)
 
+  let accessToken;
+
+  beforeEach(async () => {
+    accessToken = await request(app).post("/v1/auth/login").send({
+      email: "soulcairn@gmail.com",
+      password: "test",
+    });
+
+    return accessToken;
+  })
+
   it("should response with 201 as status code and should response ", async () => {
     const name = "Range Rover MX1";
     const price = 5000000;
     const image = "string";
     const size = "MEDIUM";
-
-    const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "soulcairn@gmail.com",
-      password: "test",
-    });
 
     // console.log("TESTING - ISI accessToken: " + JSON.stringify(accessToken.body));
 
@@ -53,11 +59,6 @@ describe("POST /v1/cars", () => {
     const price = {};
     const image = {};
     const size = {};
-
-    const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "soulcairn@gmail.com",
-      password: "test",
-    });
 
     return request(app)
       .post("/v1/cars")
