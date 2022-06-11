@@ -3,9 +3,11 @@ const request = require("supertest");
 const app = require("../../../../../app");
 const { Car } = require("../../../../../app/models");
 
+// Function for testing endpoint delete car
 describe("DELETE /v1/cars/:id", () => {
   let car, accessToken;
 
+  // Create dummy data for testing before every 'it' method
   beforeEach(async () => {
     //jest.setTimeout(10000);
     const id = 2000;
@@ -36,7 +38,8 @@ describe("DELETE /v1/cars/:id", () => {
   // Delete dummy data after every 'it' method
   afterEach(() => car.destroy());
 
-  it("should response with 200 as status code", async () => {
+  // State what the response should be if status code 204
+  it("should response with 204 as status code", async () => {
     return request(app)
       .delete("/v1/cars/" + car.id)
       .set("Authorization", `${accessToken.body.accessToken}`)
@@ -45,15 +48,16 @@ describe("DELETE /v1/cars/:id", () => {
       });
   });
 
+  // State what the response should be if status code 422
   it("should response with 422 as status code", async () => {
-      const carError = {
-        id: {},
-        name: {},
-        price: {},
-        size: {},
-        image: {},
-        isCurrentlyRented: {},
-      };
+    const carError = {
+      id: {},
+      name: {},
+      price: {},
+      size: {},
+      image: {},
+      isCurrentlyRented: {},
+    };
 
     return request(app)
       .delete("/v1/cars/" + carError.id)

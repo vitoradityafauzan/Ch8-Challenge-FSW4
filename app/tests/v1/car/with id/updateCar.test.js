@@ -4,9 +4,11 @@ const request = require("supertest");
 const app = require("../../../../../app");
 const { Car } = require("../../../../../app/models");
 
+// Function for testing endpoint update car
 describe("PUT /v1/cars/:id", () => {
-    let car, accessToken;
+  let car, accessToken;
 
+  // Creating Dummy Data and Bearer Token after every 'it' method
   beforeEach(async () => {
     const id = 200;
     const name = "Mobile Command Center";
@@ -15,7 +17,6 @@ describe("PUT /v1/cars/:id", () => {
     const image = "https://source.unsplash.com/519x519";
     const isCurrentlyRented = false;
 
-    // Creating Dummy Data
     car = await Car.create({
       id,
       name,
@@ -36,6 +37,7 @@ describe("PUT /v1/cars/:id", () => {
   // Delete dummy data after every 'it' method
   afterEach(() => car.destroy());
 
+  // State what the response should be if status code 200
   it("should response with 200 as status code", async () => {
     const name = "Kotsaka";
     const price = 15000000;
@@ -57,6 +59,7 @@ describe("PUT /v1/cars/:id", () => {
       });
   });
 
+  // State what the response should be if status code 422
   it("should response with 422 as status code", async () => {
     const name = {};
     const price = {};

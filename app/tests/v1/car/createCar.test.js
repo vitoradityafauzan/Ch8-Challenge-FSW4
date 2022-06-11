@@ -2,22 +2,24 @@
 const request = require("supertest");
 const app = require("../../../../app");
 
+// Function for testing endpoint create car
 describe("POST /v1/cars", () => {
-//   let accessToken;
+  //   let accessToken;
 
-//   beforeEach(async () => {
-    // accessToken = await request(app).post("/v1/auth/login").send({
-    //   email: "keyblade@gmail.com",
-    //   password: "test",
-    // });
+  //   beforeEach(async () => {
+  // accessToken = await request(app).post("/v1/auth/login").send({
+  //   email: "keyblade@gmail.com",
+  //   password: "test",
+  // });
 
-//     return accessToken;
-//   });
+  //     return accessToken;
+  //   });
 
-//   console.log("TESTING - ISI accessToken: " + accessToken)
+  //   console.log("TESTING - ISI accessToken: " + accessToken)
 
   let accessToken;
 
+  // Creating Bearer Token for each 'it' method
   beforeEach(async () => {
     accessToken = await request(app).post("/v1/auth/login").send({
       email: "soulcairn@gmail.com",
@@ -25,8 +27,9 @@ describe("POST /v1/cars", () => {
     });
 
     return accessToken;
-  })
+  });
 
+  // State what the response should be if status code 201
   it("should response with 201 as status code and should response ", async () => {
     const name = "Range Rover MX1";
     const price = 5000000;
@@ -54,6 +57,7 @@ describe("POST /v1/cars", () => {
       });
   });
 
+  // State what the response should be if status code 422
   it("should response with 422 as status code", async () => {
     const name = {};
     const price = {};
@@ -78,6 +82,7 @@ describe("POST /v1/cars", () => {
       });
   });
 
+  // State what the response should be if status code 401
   it("should response with 401 as status code", async () => {
     const name = {};
     const price = {};

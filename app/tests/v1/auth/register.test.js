@@ -3,40 +3,9 @@ const request = require("supertest");
 const app = require("../../../../app");
 // const { userDe } = require("../../../../app/models/user");
 
+// Function for testing endpoint register
 describe("POST /v1/auth/register", () => {
-  // beforeEach(async () => {
-  //   const id = 200;
-  //   const name = "Rick Sanchez";
-  //   const roleId = 2;
-  //   const email = "theSmartest@SDN.com";
-  //   const encryptedPassword = "$2a$10$dPTLsK0IlF6bnK8fG7PRD.4NINx8oS91pX2wHAgC1107G1y2C4IN6";
-
-  // Creating Dummy Data
-  //   user = await User.create({
-  //     id,
-  //     name,
-  //     email,
-  //     encryptedPassword,
-  //     roleId,
-  //   });
-
-  //   return user;
-  // });
-
-  // const name = "Rick Sanchez";
-
-  // Delete dummy data after every 'it' method
-
-  // afterEach(async () => {
-  //   userDe.findOne({
-  //     attributes: ["name"],
-  //     where: { 
-  //       name: 'Sanchez',
-  //     },
-  //   });
-  //   userDe.destroy();
-  // });
-
+  // State what the response should be if status code 201
   it("should response with 201 as status code and should response ", async () => {
     const name = "Testing Account";
     // const email = "theSmartest@SDN.com";
@@ -57,7 +26,8 @@ describe("POST /v1/auth/register", () => {
       });
   });
 
-  it("should response with default as status code", async () => {
+  // State what the response should be if status code default/500
+  it("should response with default/500 as status code", async () => {
     const name = {};
     const email = {};
     const password = {};
